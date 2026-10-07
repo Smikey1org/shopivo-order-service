@@ -304,6 +304,9 @@ jobs:
     permissions:
       contents: read
 
+    outputs:
+      image_digest: ${{ steps.image-digest.outputs.digest }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7
@@ -408,7 +411,7 @@ jobs:
       - name: Sign Image
         env:
           IMAGE: ${{ env.IMAGE_NAME }}
-          DIGEST: ${{ steps.image-digest.outputs.digest }}
+          DIGEST: ${{ needs.docker.outputs.image_digest }}
         run: |
           echo "Signing:"
           echo "${IMAGE}@${DIGEST}"
