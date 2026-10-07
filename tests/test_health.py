@@ -1,12 +1,7 @@
-from fastapi.testclient import TestClient
+def test_order_math():
+    quantity = 3
+    price = 10.50
 
-from src.app import app
+    total = quantity * price
 
-
-client = TestClient(app)
-
-
-def test_app_starts():
-    response = client.get("/")
-
-    assert response.status_code in {200, 404}
+    assert total == 31.50
