@@ -109,6 +109,7 @@ jobs:
           > checkov-dockerfile-report.json
         # TODO 1:  On Line 100, its making `CKV_DOCKER_2` to skip Health Check ci pipeline.
         # checkov:skip=CKV_DOCKER_2:Healthcheck is managed by the deployment platform
+        
       - name: Upload Checkov Reports
         if: always()
         uses: actions/upload-artifact@v7
