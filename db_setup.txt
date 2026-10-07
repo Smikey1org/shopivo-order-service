@@ -1,0 +1,22 @@
+CREATE USER order_user WITH PASSWORD 'order_123';
+CREATE DATABASE "order" OWNER order_user;
+ALTER ROLE order_user CREATEDB;
+
+docker run -dit \
+  --name shopivo-order \
+  --network shopivo-network \
+  -e DB_HOST=shopivo-postgres \
+  -e DB_PORT=5432 \
+  -e DB_USER=order_user \
+  -e DB_PASSWORD=order_123 \
+  -e DB_NAME=order \
+  -e RABBITMQ_USER=guest \
+  -e RABBITMQ_PASSWORD=guest \
+  -e RABBITMQ_HOST=localhost \
+  -e RABBITMQ_PORT=5672 \
+  -e AUTH_SERVICE_URL=http://shopivo-auth:5001 \
+  -e PRODUCT_SERVICE_URL=http://shopivo-product:5002 \
+  -e CART_SERVICE_URL=http://localhost:5003 \
+  -p 5004:5004 \
+  order-service:latest
+
